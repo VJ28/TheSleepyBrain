@@ -1,15 +1,18 @@
-const TerserJSPlugin = require("terser-webpack-plugin");
-const Style9Plugin = require("style9/webpack");
-const HTMLWebpackPlugin = require("html-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const path = require("path");
-const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const LoadablePlugin = require("@loadable/webpack-plugin").default;
+const stylemugCompiler = require("stylemug/compiler");
 
 const config = {
   entry: {
-    app: ["./client/index.js"],
+    app: "./client/index.js",
   },
+  /* for development */
   devServer: {
+    contentBase: path.join(__dirname, "dist/public"),
+    compress: false,
+    port: 8081,
     historyApiFallback: true,
   },
   output: {
@@ -18,56 +21,45 @@ const config = {
     chunkFilename: "[name].js",
     filename: "[name].js",
   },
-  devtool: "eval-source-map",
+  devtool: "source-map",
   optimization: {
-    runtimeChunk: "single",
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: "vendors",
-          enforce: true,
-          chunks: "all",
-        },
-      },
-    },
+    minimize: false, // true for production
+    minimizer: [new TerserPlugin({ extractComments: false })],
   },
   module: {
     rules: [
+      {
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
       {
         test: /\.(js|jsx)$/,
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"],
+            plugins: [
+              stylemugCompiler.babel,
+              "@babel/plugin-syntax-dynamic-import",
+              "@loadable/babel-plugin",
+            ],
           },
         },
         exclude: /node_modules/,
       },
-      {
-        test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
-      },
     ],
   },
-
   resolve: {
     extensions: [".js", ".jsx"],
+    alias: {
+      Styles: path.resolve(__dirname, "./client/styles.js"),
+    },
   },
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: "[name].css",
+    new stylemugCompiler.webpack({
+      name: "bundle.css",
     }),
-    new HTMLWebpackPlugin({
-      template: "template.html",
-    }),
-    // new webpack.DefinePlugin({
-    //   //<--key to reduce React's size
-    //   "process.env": {
-    //     NODE_ENV: JSON.stringify("production"),
-    //   },
-    // }),
-    // new webpack.optimize.AggressiveMergingPlugin(),
+    new MiniCssExtractPlugin(),
+    new LoadablePlugin(),
   ],
 };
 

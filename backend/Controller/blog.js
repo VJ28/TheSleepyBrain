@@ -1,14 +1,20 @@
-var router = require("express").Router();
-var blogRepo = require("../Repository/queryRepository/blog");
-
+import blogRepo from "../Repository/queryRepository/blog.js";
+import Render from "../renderer.js";
+const express = __non_webpack_require__("express");
+var router = express.Router();
 router.get("/blog/:title", async function (req, res) {
-  var data = await blogRepo.get(req, res);
-  return res.send(data).end();
+  //var data = await blogRepo.get(req, res);
+  Render(req, res);
 });
 
-router.get("/:pageNo", async function (req, res) {
-  var data = await blogRepo.getAll(req, res);
-  return res.send(data).end();
+router.get("/", async function (req, res) {
+  //var data = await blogRepo.getAll(req, res);
+  Render(req, res);
 });
 
-exports.blogController = router;
+router.get("/videos", async function (req, res) {
+  //var data = await blogRepo.getAll(req, res);
+  Render(req, res);
+});
+
+export default router;

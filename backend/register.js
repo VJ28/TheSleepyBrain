@@ -1,10 +1,12 @@
-var getApis = require("./Api/get");
-var blogController = require("./Controller/blog").blogController;
+import getApis from "./Api/get.js";
+import blogController from "./Controller/blog.js";
 
-module.exports = function (app) {
+function registerRoutes(app) {
   //register controllers
   app.use(blogController);
 
   //register apis
   app.use(getApis);
-};
+}
+
+export default registerRoutes;
