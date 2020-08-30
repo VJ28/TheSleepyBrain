@@ -3,6 +3,8 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const LoadablePlugin = require("@loadable/webpack-plugin").default;
 const stylemugCompiler = require("stylemug/compiler");
+const CompressionPlugin = require("compression-webpack-plugin");
+const BrotliCompressionPlugin = require("brotli-webpack-plugin");
 
 const config = {
   entry: {
@@ -15,13 +17,13 @@ const config = {
     port: 8081,
     historyApiFallback: true,
   },
+  devtool: "cheap-source-map",
   output: {
     path: path.resolve(__dirname, "dist/public/"),
     publicPath: "/",
     chunkFilename: "[name].js",
     filename: "[name].js",
   },
-  devtool: "source-map",
   optimization: {
     minimize: false, // true for production
     minimizer: [new TerserPlugin({ extractComments: false })],
@@ -63,6 +65,16 @@ const config = {
     }),
     new MiniCssExtractPlugin(),
     new LoadablePlugin(),
+    new BrotliCompressionPlugin({
+      test: /\.js$|\.css$/,
+      asset: "[path].br[query]",
+      minRatio: 0.8,
+    }),
+    new CompressionPlugin({
+      algorithm: "gzip",
+      test: /\.js$|\.css$/,
+      minRatio: 0.8,
+    }),
   ],
 };
 
