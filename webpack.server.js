@@ -12,7 +12,7 @@ module.exports = {
     path: path.resolve("./dist"),
     filename: "index.js",
   },
-  devtool: "cheap-eval-source-map",
+  devtool: "source-map",
   module: {
     rules: [
       {

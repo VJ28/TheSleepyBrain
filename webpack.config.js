@@ -25,6 +25,9 @@ const config = {
   optimization: {
     minimize: false, // true for production
     minimizer: [new TerserPlugin({ extractComments: false })],
+    splitChunks: {
+      chunks: "all",
+    },
   },
   module: {
     rules: [

@@ -25,8 +25,17 @@ const getCSSClass = stylemug.create({
     overflow: "hidden",
   },
   /* margin */
+  mt8: {
+    marginTop: "8px",
+  },
   mt12: {
     marginTop: "12px",
+  },
+  mt16: {
+    marginTop: "16px",
+  },
+  mb8: {
+    marginBottom: "8px",
   },
   mb12: {
     marginBottom: "12px",
@@ -49,6 +58,9 @@ const getCSSClass = stylemug.create({
     paddingRight: "16px",
   },
   /* font sizes */
+  font12: {
+    fontSize: "12px",
+  },
   font20: {
     fontSize: "20px",
   },
@@ -86,6 +98,10 @@ const getCSSClass = stylemug.create({
     boxShadow: "0 4px 4px rgba(0, 0, 0, 0.25)",
   },
 
+  /* border radius */
+  borderRadius3: {
+    borderRadius: "3px",
+  },
   /* text align */
   text_align_center: {
     textAlign: "center",
@@ -93,6 +109,9 @@ const getCSSClass = stylemug.create({
   /* height */
   height48: {
     height: "48px",
+  },
+  articleCardHeight: {
+    height: "135px",
   },
 });
 

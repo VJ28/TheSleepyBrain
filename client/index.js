@@ -5,11 +5,10 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./app";
 
 const renderMethod = typeof window !== "undefined" ? render : hydrate;
-
 loadableReady(() => {
   renderMethod(
     <BrowserRouter>
-      <App />
+      <App data={window.data} />
     </BrowserRouter>,
     document.getElementById("root")
   );

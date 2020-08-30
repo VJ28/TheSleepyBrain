@@ -8,6 +8,7 @@ const getClasses = stylemug.create({
     height: "8px",
     marginTop: "4px",
     transition: "transform 1s",
+    willChange: "transform",
   },
   firstBar: {
     marginTop: 0,
@@ -23,7 +24,7 @@ const getClasses = stylemug.create({
       transformOrigin: "0px 8px",
     },
     "& > div:nth-child(2)": {
-      transform: "translateX(35px)",
+      transform: "translateX(36px)",
     },
     "& > div:last-child": {
       transform: "rotate(-45deg)",
@@ -90,6 +91,7 @@ const expandNavClasses = `${getClasses("expandNav")} ${getCSSClasses(
   "bg_russianBlack"
 )}`;
 const animateHamburgerClasses = getClasses("animateHamburger");
+
 const HamBurgerBars = () => (
   <>
     <div className={`${barClasses} ${firstBar}`}></div>
@@ -97,6 +99,7 @@ const HamBurgerBars = () => (
     <div className={barClasses}></div>
   </>
 );
+
 const Header = () => {
   let [expandNav, setExpandNav] = React.useState(false);
   const handleNavClick = () => {
